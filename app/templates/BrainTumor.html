@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--设置登录密码-->
+<script type="text/javascript">
+loopy()
+function loopy() {
+var sWord =""
+while (sWord != "brain") {//设置密码
+sWord = prompt("输入正确密码才能登陆!")
+}
+alert("欢迎访问")
+}
+</script>
+<!--背景颜色风格-->
+<style>
+body {
+  background-color: lightblue;
+}
+</style>
+<!--网页标题、网页ico图标-->
+<head>
+    <meta charset="UTF-8">
+    <title>Web脑肿瘤检测服务</title>
+    <link rel="icon" href="{{ url_for('static', filename='sztulogo.ico') }}">
+</head>
+<!--网页主体-->
+<body>
+    <!--添加学校图标-->
+    <img id="sztu-logoname" src="/static/images/sztu_logoname.png" width="315" height="60"/>
+    <!--将学校图标置于顶部-->
+    <script type="text/javascript">
+        document.getElementById("sztu-logoname").align="top";
+    </script>
+    <!--添加健康学院图标-->
+    <p style="text-align: center;"><img id="jiankang-logoname" src="/static/images/jiankang_logoname.png" /></p>
+    <!--添加高级项目标题-->
+    <h2 align="center">高级项目脑肿瘤检测服务</h2>
+    <!--提供测试数据下载-->
+    <a href="./static/images/upload/测试数据.zip" download="测试数据.zip">
+      <p style="text-align: center;">下载测试数据</p>
+    </a>
+    <!--居中标题-->
+    <div style="width:100%;text-align:center">
+        <!--表单-->
+        <form action="" enctype='multipart/form-data' method='POST'>
+            <input type="file" name="file" class="filepath" onchange="changepic(this)" style="margin-top:20px;"/><br>
+            <img src="" id="show" width="200">
+            <br />
+            <br>
+            <input type="submit" value="上传并识别" class="button-new" style="margin-top:15px;"/>
+        </form>
+    </div>
+    <!--上传图片可见、不同浏览器使用不同的函数-->
+    <script>
+    function changepic(obj) {
+        //console.log(obj.files[0]);//这里可以获取上传文件的name
+        var newsrc=getObjectURL(obj.files[0]);//调用getObjectURL函数，将图片的路径设置为返回上传的图片的地址,将图片的路径设置为返回上传的图片的地址
+        document.getElementById('show').src=newsrc;//将图片设置为可见
+    }
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+    </script>
+</body>
+</html>

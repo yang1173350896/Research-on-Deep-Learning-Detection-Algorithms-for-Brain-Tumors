@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--定义样式-->
+<style>
+body {
+  background-color: lightblue;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 400px auto 400px;
+  grid-gap: 10px;
+  background-color: #ADD8E6;
+}
+
+.grid-container > div {
+  background-color: #ADD8E6;
+  text-align: center;
+
+}
+</style>
+<!--网页标题、网页ico图标-->
+<head>
+    <meta charset="UTF-8">
+    <title>脑肿瘤结果</title>
+    <link rel="icon" href="{{ url_for('static', filename='sztulogo.ico') }}">
+</head>
+<!--网页主体-->
+<body>
+    <!--添加学校图标-->
+    <img id="sztu-logoname" src="/static/images/sztu_logoname.png" width="315" height="60"/>
+    <!--将学校图标置于顶部-->
+    <script type="text/javascript">
+        document.getElementById("sztu-logoname").align="top";
+    </script>
+    <!--添加健康学院图标-->
+    <p style="text-align: center;"><img id="jiankang-logoname" src="/static/images/jiankang_logoname.png" /></p>
+    <!--添加高级项目标题-->
+    <h2 align="center">高级项目脑肿瘤检测服务</h2>
+    <!--div布局-->
+    <div style="width:100%;text-align:center">
+        <!--表单-->
+        <form action="" enctype='multipart/form-data' method='POST'>
+            <input type="file" name="file" class="filepath" onchange="changepic(this)" style="margin-top:20px;"/><br/>
+                <!--网络布局grid-->
+                <div class="grid-container">
+                    <div> </div>
+                    <div>
+                        <img src="{{ url_for('static', filename = inputfilename,_t=val1) }}" width="200" height="200" alt="">
+                        <div style="{text-align: center;}">原始图像</div>
+                    </div>
+                    <div>
+                        <p  style="text-indent:2em;">一级分割：脑水肿</p>
+                        <p  style="text-indent:2em;">影像数据仅包括4类标签，分别是正常组织(标签0)、坏死和非增强肿瘤(标签1)、水肿(标签2)、 增强肿瘤(标签4)。因此，不同肿瘤区域分别定义为:</br>
+                            完整肿瘤：标签为1、2和4部分；</br>
+                            核心肿瘤：标签为1和4部分；</br>
+                            增强肿瘤：标签为4部分。</br>
+                        </p>
+                    </div>
+                </div>
+            <input type="submit" value="上传并识别" class="button-new" style="margin-top:15px;"/><br/>
+                <p style="text-align: center;color:lightblue">
+                    <!--=显示分割后的图片-->
+                    <img src="{{ url_for('static', filename = outfilename1,_t=val1) }}" width="200" height="200" alt=""/>
+                    <img src="{{ url_for('static', filename = outfilename4,_t=val1) }}" width="200" height="200" alt=""/>
+                    <img src="{{ url_for('static', filename = outfilename3,_t=val1) }}" width="200" height="200" alt=""/>
+                </p>
+                <div style="{text-align: center;}">一级分割<span style="color:#ADD8E6">————————</span>二级分割<span style="color:#ADD8E6">————————</span>分割合并</div>
+        </form>
+    </div>
+    <!--上传图片可见、不同浏览器使用不同的函数-->
+    <script>
+    function changepic(obj) {
+        //console.log(obj.files[0]);//这里可以获取上传文件的name
+        var newsrc=getObjectURL(obj.files[0]);
+        document.getElementById('show').src=newsrc;
+    }
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+    </script>
+</body>
+</html>

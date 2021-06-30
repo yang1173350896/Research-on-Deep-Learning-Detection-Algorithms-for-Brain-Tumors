@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+</head>
+<body>
+    <h1>欢迎使用Web脑肿瘤检测服务</h1>
+    <form action="" enctype='multipart/form-data' method='POST'>
+        <input type="file" name="file" class="filepath" onchange="changepic(this)" style="margin-top:20px;"/><br>
+        <img src="" id="show" width="200">
+<!--        <input id="file" class="filepath" onchange="changepic(this)" type="file"><br>-->
+        <br />
+        <br>
+        <input type="submit" value="上传并识别" class="button-new" style="margin-top:15px;"/>
+    </form>
+    <script>
+    function changepic(obj) {
+        //console.log(obj.files[0]);//这里可以获取上传文件的name
+        var newsrc=getObjectURL(obj.files[0]);
+        document.getElementById('show').src=newsrc;
+    }
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+    </script>
+<!--    <img src="" id="show" width="200">-->
+</body>
+</html>
